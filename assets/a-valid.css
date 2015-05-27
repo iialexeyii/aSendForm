@@ -1,0 +1,36 @@
+form{
+	position: relative;
+}
+
+.a-valid-message{
+	text-align: left !important;
+	font-family: 'Tahoma' !important;
+	color: #fff !important;
+	font-size: 13px !important;
+	line-height: normal !important;
+	text-align: left !important;
+	color: #fff !important;
+	font-size: 12px !important;
+	background: #BD3D40 !important;
+	padding: 3px 12px !important;
+	z-index: 1001 !important;
+	min-width: 200px !important;
+	max-width: 220px !important;
+	position: absolute !important;
+	display: none;
+}
+
+
+
+.a-valid-message:before {
+content: '' !important;
+width: 0 !important;
+height: 0 !important;
+border-left: 7px solid transparent !important;
+border-bottom: 14px solid #BD3D40 !important;
+position: absolute !important;
+left: 13px !important;
+top: -13px !important;
+border-right: 7px solid transparent !important;
+
+}
