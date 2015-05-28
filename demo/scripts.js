@@ -38,7 +38,7 @@ $(function(){
 
 
 	$("#test").aSendForm({
-			//popup : '.btnp-kp , .popup-kp',
+			//popup : ['.pkp', '.btnp-kp'],
 			goal : function(){
 				// ga('send', 'event', 'knopka', 'zakazat');
 				// yaCounter26593851.reachGoal('send');

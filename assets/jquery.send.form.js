@@ -1,7 +1,7 @@
 /* 
 	Created by Art Sites Studio
 	Site: art-sites.org
-	Version: 1.8
+	Version: 1.9
 	More bitrix inputs https://dev.1c-bitrix.ru/community/blogs/chaos/crm-sozdanie-lidov-iz-drugikh-servisov.php
 */
 (function( $ ) {
@@ -14,7 +14,7 @@
 			var s = $.extend({
 				answer : false, 				// Ответ от сервера, если не указать он будет стандартным, или можно указать jq object
 				popup : false, 					// Является ли форма всплывающим окном, если да то нужно указать два параметра через кому в виде селекторов jquery ".кнопка , .селектор_блокаформы",
-												// *Обязательно нужен плагин bPopup
+				popupEvent : false, 			// Тригер для вызова окна $(document).trigger('popupEvent');
 				popupObj : {}, 					// Объект который передаётся в плагин bPopup
 				onClickPopup : false, 			// Функция которая срабатывает во время нажатия кнопки всплывающего окна
 				goal : false, 					// Цели, для аналитики
@@ -46,13 +46,19 @@
 				if (!s.mailTo) { $.error( 'Нужно ввести Ваш E-mail');};
 				if (s.popup) {
 					if (typeof $.fn.bPopup == 'function') {
-						var popups = s.popup.split(',');
-						$(popups[0]).bind('click',function(){
+						if (typeof s.popup[1] != 'undefined') {
+								$(s.popup[1]).bind('click',function(){
 
-							if (typeof s.onClickPopup == 'function') {s.onClickPopup.apply(this)};
-							$(popups[1]).bPopup(s.popupObj);
-							return false;
-						})
+								if (typeof s.onClickPopup == 'function') {s.onClickPopup.apply(this)};
+								$(s.popup[0]).bPopup(s.popupObj);
+								return false;
+							})
+						};
+						if (s.popupEvent) {
+							$(document).on(s.popupEvent, function(e, eventInfo) { 
+							  $(s.popup[0]).bPopup(s.popupObj);
+							});
+						};
 					}else{
 						s.popup = false;
 						console.warn('Plugin bPopup is not defined, popups is not work');
@@ -188,11 +194,13 @@
 					};
 
 					if (s.moreData) {
-						input.artsDataF = [s.moreData.title,s.moreData.data];
+						for (var i = 0; i < s.moreData.length; i++) {
+							input['artsDataF'+i] = [s.moreData[i].title,s.moreData[i].data];
+						};
 					};
 					$.post(s.postQuery,input).done(function(e){
 						if (s.popup) {
-							$(popups[1]).bPopup().close();
+							$(s.popup[0]).bPopup().close();
 						};
 						if (typeof s.onSend == 'function') {s.onSend()};
 						if (s.answer) {e = s.answer};
