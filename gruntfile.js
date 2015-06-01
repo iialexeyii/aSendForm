@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 		uglify: {
 			js: {
 				options: {
-
+					banner: "/* Created by Art-Sites Studio art-sites.org */"
 				},
 				files: {
 					'assets/jquery.send.form.min.js': ['assets/jquery.send.form.js']
@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks("grunt-contrib-uglify");
 
 
-	grunt.registerTask('default', ["watch"]);
+	grunt.registerTask('default', ["uglify"]);
 
 
 

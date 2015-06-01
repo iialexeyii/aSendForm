@@ -117,7 +117,7 @@ src="http://images.art-sites.org/mail/blogo.png" alt="Powered By Receiptful" sty
 	$headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
 	// Дополнительные заголовки
 	$headers .= 'To:  <'.$to.'>' . "\r\n";
-	$headers .= 'From: '.$_POST['art_post_pagetitle'].' '. "\r\n";
+	$headers .= 'From: '.rus2translit($_POST['art_post_pagetitle']).' '. "\r\n";
 	// Отправляем
 	return mail($to, $subject, $message, $headers);
 }
