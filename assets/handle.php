@@ -108,7 +108,7 @@ function sendMail($header)
 
 
 </h3></td></tr><tr><td colspan="3" width="100%" height="20"></td></tr></table></td></tr></table></td><td></td></tr></table><table class="brand-wrap" align="center" style="margin: 0;padding: 0;border-collapse: collapse;width: 100%;margin-top: 0%;"><tr><td></td><td class="brand-container"><div class="content" style="margin: 0 auto;padding: 0;max-width: 600px;display: block;"><table width="100%" style="margin: 0;padding: 0;border-collapse: collapse;width: 100%;"><tr><td><table style="margin: 0;padding: 0;border-collapse: collapse;width: 100%;"><tr><td class="brand" align="center" valign="middle" style="height: 100px;"><a href="http://art-sites.org/" style="text-decoration:none;border:0;"><img class="template-img" width="120px" 
-src="http://images.art-sites.org/mail/blogo.png" alt="Powered By Receiptful" style="margin: 0;padding: 0;max-width: 100%;" border="0" /></a></td></tr></table></td></tr></table></div></td><td></td></tr></table></td></tr></table>
+src="http://images.art-sites.org/mail/blogo.png" alt="Powered By Art Sites" style="margin: 0;padding: 0;max-width: 100%;" border="0" /></a></td></tr></table></td></tr></table></div></td><td></td></tr></table></td></tr></table>
 </body>
 </html>
 	';
