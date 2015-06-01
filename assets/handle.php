@@ -78,7 +78,7 @@ function sendMail($header)
 				$mail_content .= '<tr><td align="right">'.$val[0].'</td><td>:</td><td>'.$val[1].'</td></tr>';
 	}
 	if ($_POST['art_bitrix'])
-		$mail_content .='Ответ от битрикс24 - '.$header->{'error_message'};
+		$mail_content .='<tr><td align="right">Ответ от битрикс24</td><td>:</td><td>'.$header->{'error_message'}.'</td></tr>';
 	$message = '
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
