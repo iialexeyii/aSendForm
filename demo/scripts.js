@@ -18,7 +18,7 @@ $(function(){
 				phone: {
 					required: true,
 					regex: /^((8|\+\d{1,3})[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/g
-				}
+				},
 			},
 
 			messages: {
@@ -49,6 +49,7 @@ $(function(){
 			mailTo : 'alexmilliarder@gmail.com',
 			//answer: true,
 			validateRuls: vRules,
+			phoneValid: ["phone-1","phone-2","phone-3", true]
 			// onClickPopup: function(){
 				
 			// },

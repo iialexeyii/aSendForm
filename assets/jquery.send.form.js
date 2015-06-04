@@ -1,7 +1,7 @@
 /* 
 	Created by Art Sites Studio
 	Site: art-sites.org
-	Version: 1.9
+	Version: 2.0
 	More bitrix inputs https://dev.1c-bitrix.ru/community/blogs/chaos/crm-sozdanie-lidov-iz-drugikh-servisov.php
 */
 (function( $ ) {
@@ -28,7 +28,8 @@
 				bitrix : { 						// Параметры для полей битрикса, обязательно нужно заполнить доступа к битриксу в файле handle.php
 					'TITLE' : false
 				},
-				validateRuls: false				// Правила и сообщения для валидации
+				validateRuls: false,			// Правила и сообщения для валидации
+				phoneValid: false
 
 			}, params);
 			var thisForm = $(this);
@@ -82,7 +83,27 @@
 				    for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
 				    return obj3;
 				}
-
+				var phoneVal = false;
+				if (s.phoneValid) {
+					if (typeof $.fn.mask == 'function') {
+						thisForm.find("[name="+s.phoneValid[0]+"]").mask("+00", {placeholder:'+1'});
+						thisForm.find("[name="+s.phoneValid[1]+"]").mask("000", {placeholder:'123'});
+						thisForm.find("[name="+s.phoneValid[2]+"]").mask("0000000", {placeholder:'1234567'});
+						if (s.phoneValid[3]) {
+							phoneVal = {};
+							phoneVal.rules = {};
+							phoneVal.messages = {};
+							phoneVal.rules[s.phoneValid[0]] = {required: true,minlength: 2}
+							phoneVal.rules[s.phoneValid[1]] = {required: true,minlength: 3}
+							phoneVal.rules[s.phoneValid[2]] = {required: true,minlength: 7}
+							phoneVal.messages[s.phoneValid[0]] = {required: " ",minlength:" "}
+							phoneVal.messages[s.phoneValid[1]] = {required: " ",minlength:" "}
+							phoneVal.messages[s.phoneValid[2]] = {required: " ",minlength:" "};
+						};
+					}else{
+						console.warn('Function nask is not defined, nask is not work');
+					}
+				};
 				if (s.validateRuls) {
 					if (typeof $.fn.validate == 'function') {
 						var validateOption = {
@@ -90,23 +111,25 @@
 							errorPlacement: function(error,element){
 								$(element).css('box-shadow','0 0 5px #ED2328');
 								$(element).css('border-color','#ED2328');
-								$(element).after($(error).addClass("a-valid-message")
-									.css('margin-top',14 - $(element).css('marginBottom').replace(/px/g,"") +'px')
-									.css('width', $(element).next('.a-valid-message'+' > p').outerWidth()+'px')
-									.css('margin-left', ($(element).outerWidth()/100)*50  + parseFloat($(element).css('marginLeft')) +'px')
-									.css("display","none")
-									.fadeIn("fast",function(){
-										setTimeout(function(){$(element).next('.a-valid-message').fadeOut(50)},2000);
-									}));
-								if ($(element).css('float') != 'none') {
-									$(element).next('.a-valid-message').css('margin-top',14 + parseFloat($(element).height()) +'px')
+								if ($(error[0]).text() != " ") {
+									$(element).after($(error).addClass("a-valid-message")
+										.css('margin-top',14 - $(element).css('marginBottom').replace(/px/g,"") +'px')
+										.css('width', $(element).next('.a-valid-message'+' > p').outerWidth()+'px')
+										.css('margin-left', ($(element).outerWidth()/100)*70  + parseFloat($(element).css('marginLeft')) +'px')
+										.css("display","none")
+										.fadeIn("fast",function(){
+											setTimeout(function(){$(element).next('.a-valid-message').fadeOut(60)},2000);
+										}));
+									if ($(element).css('float') != 'none') {
+										$(element).next('.a-valid-message').css('margin-top',14 + parseFloat($(element).height()) +'px')
+									};
+									$(element).focus(function(){
+										$(element).next('.a-valid-message').fadeIn("fast");	
+									});
+									$(element).focusout(function(){
+										$(element).next('.a-valid-message').fadeOut(50);
+									});
 								};
-								$(element).focus(function(){
-									$(element).next('.a-valid-message').fadeIn("fast");	
-								});
-								$(element).focusout(function(){
-									$(element).next('.a-valid-message').fadeOut(50);
-								});
 							},
 
 							success: function (label) {
@@ -126,7 +149,10 @@
 					        },
 					        "Please check your input."
 						);
-
+						if (s.phoneValid[3]) {
+							s.validateRuls.rules = merge_options(phoneVal.rules, s.validateRuls.rules);
+							s.validateRuls.messages = merge_options(phoneVal.messages, s.validateRuls.messages);
+						};
 						thisForm.validate(merge_options(validateOption, s.validateRuls));
 
 						thisForm.find('input').keypress(function (e) {
@@ -140,6 +166,7 @@
 					}else{
 						console.warn('Function validate is not defined, validation is not work');
 					}
+					
 				};
 
 			/*
@@ -169,6 +196,18 @@
 						}else{
 							input[serializeForm[i].name] = [serializeForm[i].name,serializeForm[i].value];
 						}
+					};
+					if (s.phoneValid) {
+
+						if(s.associations["phone"]){
+							input["phone"] = [s.associations["phone"], input[s.phoneValid[0]][1]+input[s.phoneValid[1]][1]+input[s.phoneValid[2]][1]];
+						}else{
+							input["phone"] = ["phone", input[s.phoneValid[0]][1]+input[s.phoneValid[1]][1]+input[s.phoneValid[2]][1]];
+						}
+
+						delete input[s.phoneValid[0]];
+						delete input[s.phoneValid[1]];
+						delete input[s.phoneValid[2]];
 					};
 
 					$(this).find('input, textarea').each(function(){
