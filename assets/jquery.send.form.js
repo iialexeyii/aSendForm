@@ -212,7 +212,7 @@
 					};
 
 					if (s.onClickForm) {
-						var onClickFormResult = s.onClickForm();
+						var onClickFormResult = s.onClickForm.apply(this);
 						if (onClickFormResult) {
 							for (var i = 0; i < onClickFormResult.length; i++) {
 								input['artsDataD'+i] = [onClickFormResult[i].title,onClickFormResult[i].data];

@@ -56,7 +56,7 @@ $(function(){
 			}],
 			onClickForm: function(){
 				return [{
-					title: "onClickForm",
+					title: $(this).html(),
 					data: "data"
 				}]
 			}
