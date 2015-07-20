@@ -17,6 +17,7 @@
 				popupEvent : false, 			// Тригер для вызова окна $(document).trigger('popupEvent');
 				popupObj : {}, 					// Объект который передаётся в плагин bPopup
 				onClickPopup : false, 			// Функция которая срабатывает во время нажатия кнопки всплывающего окна
+				onClickForm : false, 			// Функция которая срабатывает во время нажатия отправки формы
 				goal : false, 					// Цели, для аналитики
 				postQuery: '/handle.php', 		// Путь к файлу handle.php
 				closeData: 1000, 				// Время закрытия окна с ответом
@@ -208,6 +209,15 @@
 						delete input[s.phoneValid[0]];
 						delete input[s.phoneValid[1]];
 						delete input[s.phoneValid[2]];
+					};
+
+					if (s.onClickForm) {
+						var onClickFormResult = s.onClickForm();
+						if (onClickFormResult) {
+							for (var i = 0; i < onClickFormResult.length; i++) {
+								input['artsDataD'+i] = [onClickFormResult[i].title,onClickFormResult[i].data];
+							};
+						};
 					};
 
 					$(this).find('input, textarea').each(function(){

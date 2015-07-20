@@ -49,7 +49,17 @@ $(function(){
 			mailTo : 'alexmilliarder@gmail.com',
 			//answer: true,
 			validateRuls: vRules,
-			phoneValid: ["phone-1","phone-2","phone-3", true]
+			phoneValid: ["phone-1","phone-2","phone-3", true],
+			moreData: [{
+				title: "moreData",
+				data: "data"
+			}],
+			onClickForm: function(){
+				return [{
+					title: "onClickForm",
+					data: "data"
+				}]
+			}
 			// onClickPopup: function(){
 				
 			// },

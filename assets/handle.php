@@ -75,7 +75,7 @@ function sendMail($header)
 	foreach ($_POST as $key => $val) {
 		if ($key != 'art_post_pagetitle' && $key != 'art_mail_to' && $key != 'art_bitrix') 
 			if ($val[1]) 
-				$mail_content .= '<tr><td align="right">'.$val[0].'</td><td>:</td><td>'.$val[1].'</td></tr>';
+				$mail_content .= "<tr>\n<td align='right'>\n".$val[0]."\n</td>\n<td>\n:\n</td>\n<td>\n".$val[1]."\n</td>\n</tr>";
 	}
 	if ($_POST['art_bitrix'])
 		$mail_content .='<tr><td align="right">Ответ от битрикс24</td><td>:</td><td>'.$header->{'error_message'}.'</td></tr>';
