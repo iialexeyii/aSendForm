@@ -226,7 +226,7 @@
 						};
 					});
 
-					if (typeof s.goal == 'function') {s.goal()};
+					if (typeof s.goal == 'function') {s.goal.apply(this)};
 
 					input.art_post_pagetitle = document.title;
 					input.art_mail_to = s.mailTo;
