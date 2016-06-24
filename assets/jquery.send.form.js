@@ -191,13 +191,31 @@
 					var input = {};
 
 					var serializeForm = $(this).serializeArray();
+					// for(var a in serializeForm){
+					// 	if(serializeForm[a].name.indexOf("[") != -1){
+					// 		console.log(serializeForm[a].name.substr(0, serializeForm[a].name.indexOf("[")))
+					// 	}
+					// }
+					//console.log(serializeForm);
 					for (var i = 0; i < serializeForm.length; i++) {
-						if(s.associations[serializeForm[i].name]){
-							input[serializeForm[i].name] = [s.associations[serializeForm[i].name],serializeForm[i].value];
+						if(serializeForm[i].name.indexOf("[") != -1){
+							var name = serializeForm[i].name.substr(0, serializeForm[i].name.indexOf("["));
+							var num = serializeForm[i].name.substr(serializeForm[i].name.indexOf("[")+1, serializeForm[i].name.indexOf("]") - serializeForm[i].name.indexOf("[") -1);
+							if(s.associations[name]){
+								input[name+"_"+num] = [s.associations[name] + " "+ num,serializeForm[i].value];
+							}else{
+								input[name+"_"+num] = [name+"_"+num,serializeForm[i].value];
+							}
 						}else{
-							input[serializeForm[i].name] = [serializeForm[i].name,serializeForm[i].value];
+							if(s.associations[serializeForm[i].name]){
+								input[serializeForm[i].name] = [s.associations[serializeForm[i].name],serializeForm[i].value];
+							}else{
+								input[serializeForm[i].name] = [serializeForm[i].name,serializeForm[i].value];
+							}
 						}
 					};
+					console.log(input);
+					return false;
 					if (s.phoneValid) {
 
 						if(s.associations["phone"]){
