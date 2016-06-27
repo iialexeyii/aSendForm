@@ -214,8 +214,6 @@
 							}
 						}
 					};
-					console.log(input);
-					return false;
 					if (s.phoneValid) {
 
 						if(s.associations["phone"]){
